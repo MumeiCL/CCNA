@@ -64,6 +64,40 @@ Mô hình OSI (Open Systems Interconnection) là một khung lý thuyết đư�
 - Step 5: Dán tiếp IP source, đích vào (gọi là packet), tìm đường đi đến IP đích, dựa vào bảng routing table => thực hiện tại tầng network, kết quả tìm ra interface nào cần đẩy ra,
 - Step 6: Thực hiện việc dán địa chỉ source MAC (của cổng mạng) và dest MAC (là MAC của thiết bị gần nhất) , gọi là frame => thực hiện tại Tầng data link
 - Step 7: Biến các frame thành tín hiệu điện và gửi lên cable mạng truyền đi đến đích => Physical
+# Mô hình TCP/IP
+Mô hình TCP/IP (Transmission Control Protocol/Internet Protocol) là một kiến trúc mạng được phát triển để mô tả các giao thức và dịch vụ của mạng Internet. Không giống như mô hình OSI có bảy tầng, mô hình TCP/IP chỉ có bốn tầng, tập trung vào việc mô tả các giao thức cụ thể được sử dụng để liên lạc trên Internet.
+![image](https://github.com/user-attachments/assets/43eeee31-6aa1-46f6-a67e-51839f6a3e38)
+## Tầng 1 - Network Access
+- Tầng này tương ứng với hai tầng thấp nhất trong mô hình OSI: tầng liên kết dữ liệu và tầng vật lý. Nó quản lý việc truyền dữ liệu qua mạng vật lý, bao gồm việc kiểm soát cách thức các gói tin được truyền qua mạng cục bộ (LAN) hoặc mạng diện rộng (WAN). Tầng này cũng định nghĩa cách các dữ liệu được đóng gói vào các khung (frames) và quản lý giao tiếp giữa các thiết bị trong cùng một mạng.
+- Giao thức phổ biến:
+    - Ethernet: Định nghĩa cách dữ liệu được truyền trong mạng LAN.
+    - PPP (Point-to-Point Protocol): Được sử dụng cho kết nối điểm-điểm.
+    - Wi-Fi: Định nghĩa cách dữ liệu được truyền qua các mạng không dây.
+- Ví dụ: Khi bạn kết nối máy tính với mạng Wi-Fi, tầng truy cập mạng sử dụng giao thức Wi-Fi để quản lý việc truyền dữ liệu giữa máy tính của bạn và router.
+
+## Tầng 2 - Internet
+- Tầng mạng trong mô hình TCP/IP tương ứng với tầng mạng trong mô hình OSI. Nó chịu trách nhiệm định tuyến các gói dữ liệu từ nguồn đến đích, có thể qua nhiều mạng trung gian. Tầng này cũng chịu trách nhiệm định địa chỉ và phân đoạn các gói dữ liệu để chúng có thể được gửi qua mạng.
+- Giao thức phổ biến:
+    - IP (Internet Protocol): Chịu trách nhiệm định địa chỉ và định tuyến gói tin trên mạng.
+    - ICMP (Internet Control Message Protocol): Được sử dụng để gửi thông báo lỗi và điều khiển trong mạng (ví dụ: thông báo rằng một gói tin không thể đến đích).
+    - ARP (Address Resolution Protocol): Chuyển đổi địa chỉ IP sang địa chỉ MAC.
+- Ví dụ: Khi bạn gửi email, giao thức IP sẽ định tuyến các gói tin từ máy tính của bạn đến máy chủ email của người nhận qua nhiều mạng khác nhau.
+
+## Tầng 3 - Transport
+- Tầng này tương ứng với tầng vận chuyển trong mô hình OSI. Nó cung cấp các dịch vụ truyền tải dữ liệu giữa các thiết bị qua mạng. Tầng này có thể đảm bảo việc truyền dữ liệu đáng tin cậy hoặc không đáng tin cậy, tùy thuộc vào giao thức sử dụng. Nó chịu trách nhiệm phân đoạn, truyền, và tái lắp ghép dữ liệu tại đích, cũng như kiểm soát luồng và kiểm tra lỗi.
+- Giao thức phổ biến:
+    - TCP (Transmission Control Protocol): Cung cấp truyền tải dữ liệu đáng tin cậy, thiết lập kết nối, kiểm soát luồng và lỗi.
+    - UDP (User Datagram Protocol): Cung cấp truyền tải dữ liệu không đáng tin cậy, không thiết lập kết nối, thích hợp cho các ứng dụng yêu cầu tốc độ cao nhưng không cần độ tin cậy cao.
+- Ví dụ: Khi bạn tải xuống một file từ internet, giao thức TCP đảm bảo rằng tất cả các phần của file được nhận và tái lắp ghép chính xác tại máy tính của bạn.
+
+## Tầng 4 - Application
+- Tầng ứng dụng của mô hình TCP/IP tương ứng với các tầng ứng dụng, trình bày, và phiên của mô hình OSI. Nó cung cấp các giao thức để hỗ trợ các ứng dụng người dùng cuối và giao tiếp giữa các thiết bị trên mạng. Các ứng dụng giao tiếp với mạng thông qua tầng này bằng cách sử dụng các giao thức như HTTP, FTP, SMTP, DNS, và nhiều giao thức khác.
+- Giao thức phổ biến:
+    - HTTP/HTTPS: Được sử dụng để truyền tải dữ liệu web.
+    - FTP: Được sử dụng để truyền tải file giữa các hệ thống.
+    - SMTP: Được sử dụng để gửi email.
+    - DNS: Được sử dụng để phân giải tên miền thành địa chỉ IP.
+- Ví dụ: Khi bạn sử dụng trình duyệt web để truy cập trang web, bạn đang tương tác với tầng ứng dụng của mô hình TCP/IP thông qua giao thức HTTP hoặc HTTPS.
 
 
 
