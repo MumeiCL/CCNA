@@ -18,7 +18,7 @@ Cost= Interface Bandwidth/Reference Bandwidth
 ### Thay đổi giá trị reference-bandwidth trên mỗi route
 ```
 R1(config)#router ospf 1
-R1(config-router)#auto-cost reference-bandwidth 100000
+R1(config-router)#auto-cost reference-bandwidth 10000
 ```
 ### Có 2 đường đi từ R1 đến 10.1.2.0/24 từ R1 > R2 và R1 > R5 nhưng trong routing table chỉ hiện quãng đường từ R1 > R5
 ```
@@ -71,3 +71,32 @@ O        192.168.0.3 [110/2001] via 10.0.0.2, 00:11:42, Ethernet0/0
 O        192.168.0.4 [110/3001] via 10.0.3.2, 00:00:33, Ethernet0/1
                      [110/3001] via 10.0.0.2, 00:00:33, Ethernet0/0
 ```
+# Multi-Area OSPF
+Mô hình: ![image](https://github.com/user-attachments/assets/7301b3f3-5345-4b38-ba9d-9b9c8237313a)
+## Giữ nguyên cấu hình trên R3,4 thay đổi cấu hình R1,2,5 
+```
+R1(config)#router ospf 1
+R1(config-router)#network 10.0.0.0 0.255.255.255 area 1
+R1(config-router)#network 192.168.0.0 0.0.0.255 area 1
+
+R2(config)#router ospf 1
+R2(config-router)#no network 10.0.0.0 0.255.255.255 area 0
+R2(config-router)#network 10.1.0.0 0.0.0.255 area 0
+R2(config-router)#network 10.0.0.0 0.0.0.255 area 1
+
+R5(config)#router ospf 1
+R5(config-router)#no network 10.0.0.0 0.255.255.255 area 0
+R5(config-router)#network 10.1.3.0 0.0.0.255 area 0
+R5(config-router)#network 10.0.3.0 0.0.0.255 area 1
+```
+## Cấu hình Summary Route trên các Area Border giúp giảm số lượng route được quảng bá qua các khu vực OSPF Tối ưu hóa bảng định tuyến, tiết kiệm băng thông
+```
+R2(config)#router ospf 1
+R2(config-router)#area 0 range 10.1.0.0 255.255.0.0
+R2(config-router)#area 1 range 10.0.0.0 255.255.0.0
+
+R5(config)#router ospf 1
+R5(config-router)#area 0 range 10.1.0.0 255.255.0.0
+R5(config-router)#area 1 range 10.0.0.0 255.255.0.0
+```
+# DR and BDR  Designated Routers
